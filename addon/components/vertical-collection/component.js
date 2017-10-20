@@ -108,6 +108,17 @@ const VerticalCollection = Component.extend({
    */
   bufferSize: 1,
 
+  /**
+   * Determines whether or not the collection will incrementally render by measuring post-render to see if
+   * more items can be rendered, and optionally doing so. This is a minor perf hit overall, but good if
+   * you have varied item sizes and cannot predict how many will display in advance.
+   *
+   * @property incrementalRender
+   * @type Boolean
+   * @default false
+   */
+  incrementalRender: false,
+
   // –––––––––––––– Initial Scroll State
   /**
    * If set, upon initialization the scroll
@@ -248,6 +259,7 @@ const VerticalCollection = Component.extend({
     const bufferSize = this.get('bufferSize');
     const containerSelector = this.get('containerSelector');
     const estimateHeight = this.get('estimateHeight');
+    const incrementalRender = this.get('incrementalRender');
     const initialRenderCount = this.get('initialRenderCount');
     const renderAll = this.get('renderAll');
     const renderFromLast = this.get('renderFromLast');
@@ -264,6 +276,7 @@ const VerticalCollection = Component.extend({
         bufferSize,
         containerSelector,
         estimateHeight,
+        incrementalRender,
         initialRenderCount,
         items,
         renderAll,

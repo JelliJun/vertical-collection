@@ -82,6 +82,7 @@ export const standardTemplate = hbs`
       estimateHeight=(either-or estimateHeight 20)
       staticHeight=staticHeight
       bufferSize=(either-or bufferSize 0)
+      incrementalRender=incrementalRender
       renderAll=renderAll
       debugVis=(either-or debugVis false)
       debugCSS=(either-or debugCSS false)
@@ -124,7 +125,8 @@ function generateScenario(name, defaultOptions, initializer) {
     const items = initializer ? initializer(baseItems.slice()) : baseItems.slice();
     const scenario = { items };
 
-    Ember.merge(scenario, options, defaultOptions);
+    Ember.merge(scenario, options);
+    Ember.merge(scenario, defaultOptions);
 
     return { [name]: scenario };
   };

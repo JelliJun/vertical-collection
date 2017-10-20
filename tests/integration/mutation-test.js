@@ -138,7 +138,7 @@ testScenarios(
 
 testScenarios(
   'Collection can shrink number of items if would cause fewer VCs to be shown and scroll would change',
-  scenariosFor(getNumbers(0, 20)),
+  scenariosFor(getNumbers(0, 20), { incrementalRender: true }),
   standardTemplate,
 
   async function(assert) {
@@ -225,7 +225,7 @@ testScenarios(
     const itemContainer = find('.scrollable');
 
     // Occlude a single item,
-    await scrollTo('.scrollable', 0, 140);
+    await scrollTo('.scrollable', 0, 41);
 
     assert.equal(find('.vertical-item:first-of-type').textContent.trim(), '1 1', 'first item rendered correctly after initial scroll set');
     assert.equal(paddingBefore(itemContainer), 40, 'itemContainer padding correct before same items set');
