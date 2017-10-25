@@ -37,54 +37,54 @@ module.exports = {
     this.options = this.options || {};
   },
 
-  treeForAddon(tree) {
-    let babel = this.addons.find((addon) => addon.name === 'ember-cli-babel');
-    let withPrivate    = new Funnel(tree, { include: ['-private/**'] });
-    let withoutPrivate = new Funnel(tree, {
-      exclude: [
-        '**/**.hbs',
-        '-private',
-        isProductionEnv() ? '-debug' : false
-      ].filter(Boolean),
-
-      destDir: 'vertical-collection'
-    });
-
-    let privateTree = babel.transpileTree(withPrivate, {
-      babel: this.options.babel,
-      'ember-cli-babel': {
-        compileModules: false
-      }
-    });
-
-    const templateTree = new Funnel(tree, {
-      include: ['**/**.hbs']
-    });
-
-    // use the default options
-    const addonTemplateTree = this._super(templateTree);
-    let publicTree = babel.transpileTree(withoutPrivate);
-
-    privateTree = new Rollup(privateTree, {
-      rollup: {
-        entry: '-private/index.js',
-        targets: [
-          { dest: 'vertical-collection/-private.js', format: 'amd', moduleId: 'vertical-collection/-private' }
-        ],
-        external: ['ember']
-      }
-    });
-
-    // the output of treeForAddon is required to be modules/<your files>
-    publicTree  = new Funnel(publicTree,  { destDir: 'modules' });
-    privateTree = new Funnel(privateTree, { destDir: 'modules' });
-
-    return merge([
-      addonTemplateTree,
-      publicTree,
-      privateTree
-    ]);
-  },
+  // treeForAddon(tree) {
+  //   let babel = this.addons.find((addon) => addon.name === 'ember-cli-babel');
+  //   let withPrivate    = new Funnel(tree, { include: ['-private/**'] });
+  //   let withoutPrivate = new Funnel(tree, {
+  //     exclude: [
+  //       '**/**.hbs',
+  //       '-private',
+  //       isProductionEnv() ? '-debug' : false
+  //     ].filter(Boolean),
+  //
+  //     destDir: 'vertical-collection'
+  //   });
+  //
+  //   let privateTree = babel.transpileTree(withPrivate, {
+  //     babel: this.options.babel,
+  //     'ember-cli-babel': {
+  //       compileModules: false
+  //     }
+  //   });
+  //
+  //   const templateTree = new Funnel(tree, {
+  //     include: ['**/**.hbs']
+  //   });
+  //
+  //   // use the default options
+  //   const addonTemplateTree = this._super(templateTree);
+  //   let publicTree = babel.transpileTree(withoutPrivate);
+  //
+  //   privateTree = new Rollup(privateTree, {
+  //     rollup: {
+  //       entry: '-private/index.js',
+  //       targets: [
+  //         { dest: 'vertical-collection/-private.js', format: 'amd', moduleId: 'vertical-collection/-private' }
+  //       ],
+  //       external: ['ember']
+  //     }
+  //   });
+  //
+  //   // the output of treeForAddon is required to be modules/<your files>
+  //   publicTree  = new Funnel(publicTree,  { destDir: 'modules' });
+  //   privateTree = new Funnel(privateTree, { destDir: 'modules' });
+  //
+  //   return merge([
+  //     addonTemplateTree,
+  //     publicTree,
+  //     privateTree
+  //   ]);
+  // },
 
   _hasSetupBabelOptions: false,
   buildBabelOptions(originalOptions) {
